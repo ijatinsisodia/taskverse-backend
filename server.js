@@ -12,21 +12,31 @@ const app = express()
 const port = process.env.PORT || 8000
 
 //middleware
-app.use(cors())
+import cors from "cors";
+
+app.use(
+    cors({
+        origin: ["http://localhost:5173", "https://taskverse-frontend.vercel.app"],
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        credentials: true,
+    })
+);
+app.options("*", cors());
+
 app.use(express.json())
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true }))
 
 //DB connect
 connectDB()
 
 //Routes
-app.get('/',(req, res)=> {
+app.get('/', (req, res) => {
     res.send("API working")
 })
 
 app.use("/api/users", userRouter)
 app.use("/api/tasks", taskRouter)
 
-app.listen(port, ()=> {
+app.listen(port, () => {
     console.log(`Server started on http://localhost:${port}`)
 })
