@@ -1,5 +1,5 @@
 import express from "express"
-import cors from "cors"
+
 import { connectDB } from "./config/db.js"
 import userRouter from "./routes/userRoutes.js"
 import taskRouter from "./routes/taskRoutes.js"
@@ -14,14 +14,8 @@ const port = process.env.PORT || 8000
 //middleware
 import cors from "cors";
 
-app.use(
-    cors({
-        origin: ["http://localhost:5173", "https://taskverse-frontend.vercel.app"],
-        methods: ["GET", "POST", "PUT", "DELETE"],
-        credentials: true,
-    })
-);
-app.options("*", cors());
+app.use(cors());
+
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
